@@ -1,0 +1,3 @@
+Hello,
+a new message was received from {{ firstName }} ({{ email }}) ({{ phoneNumber }}):
+{{ message }}
