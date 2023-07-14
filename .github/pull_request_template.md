@@ -4,7 +4,7 @@ Please include a summary of the changes (use imperative, present tense (eg: use 
 
 **Issue:** #issue-number (remove if no issue related)
 
-## Type of change
+# Type of change
 
 Please mark **one** relevant option:
 
