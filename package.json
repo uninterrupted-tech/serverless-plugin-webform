@@ -1,6 +1,6 @@
 {
   "name": "@uninterrupted/serverless-plugin-webform",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Powerful tool that simplifies the creation and management of forms in serverless applications.",
   "keywords": [
     "aws",
@@ -26,6 +26,10 @@
       "email": "michal.miler@uninterrupted.tech"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uninterrupted-tech/serverless-plugin-webform"
+  },
   "main": "src/index.js",
   "type": "module",
   "scripts": {
