@@ -9,12 +9,13 @@ assignees: u11d-bartlomiej-galezowski, u11d-michal-miler
 **Bug description**
 A clear and concise description of what the bug is.
 
-**Steps to reproduce**
-Steps to reproduce the behavior:
+**Steps to reproduce:**
+
 1. 
+1.
 
 **Current behavior**
-A clear and concise description of current behavior.
+A clear and concise description of the current behavior.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
