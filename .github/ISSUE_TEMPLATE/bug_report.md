@@ -1,7 +1,6 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG]"
 labels: bug
 assignees: u11d-bartlomiej-galezowski, u11d-michal-miler
 
@@ -20,7 +19,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Environemnt (please complete the following information):**
+**Environment (please complete the following information):**
  - Node: [e.g. node18.14.0]
  - Serverless framework: [e.g. sls3.26.0]
 
