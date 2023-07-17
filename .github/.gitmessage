@@ -1,4 +1,4 @@
-# Hello there! 
+# Hello there!
 #
 # We care about making our git history clean, maintainable and easy to access for
 # all our contributors. Commit messages are very important to us,
@@ -11,19 +11,18 @@
 # Please note that:
 # + <type> describes the kind of change that this commit is providing.
 #   Allowed types are:
-#   * build: Build related changes (eg: npm related/ adding external dependencies)
-#   * chore: A code change that external user won't see (eg: change to .gitignore file or .prettierrc file)
+#   * release: New version release
+#   * chore: A code change that external user won't see (e.g.: CI update or changes in `.gitignore`/`.prettierrc` files)
 #   * feat: A new feature
 #   * fix: A bug fix
 #   * docs: Documentation related changes
-#   * refactor: A code that neither fix bug nor adds a feature. (eg: You can use this when there is semantic changes like renaming a variable/ function name)
-#   * perf: A code that improves performance
+#   * refactor: A change that improves the code without changing its behavior
+#   * perf: A change improving performance
 #   * test: Adding new test or making changes to existing test
 #
 # + <subject> is a very short description of the change, in the following format:
-#   * imperative, present tense (eg: use "add" instead of "added" or "adds"
+#   * imperative, present tense (eg: use "add" instead of "added" or "adds")
 #   * no capitalized first letter
 #   * no dot (.) at the end
-#
 #
 # Thank you
