@@ -6,13 +6,13 @@ assignees: u11d-michal-miler, u11d-bartlomiej-galezowski
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**Problem description**
+A clear and concise description of what the problem is. Ex.: The plugin helps me a lot in development but it'd be even more helpful if ...
 
-**Describe the solution you'd like**
+**Expected solution**
 A clear and concise description of what you want to happen.
 
-**Describe alternatives you've considered**
+**Alternatives description**
 A clear and concise description of any alternative solutions or features you've considered.
 
 **Additional context**

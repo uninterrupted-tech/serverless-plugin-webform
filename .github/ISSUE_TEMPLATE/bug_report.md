@@ -6,12 +6,15 @@ assignees: u11d-bartlomiej-galezowski, u11d-michal-miler
 
 ---
 
-**Describe the bug**
+**Bug description**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+**Steps to reproduce**
 Steps to reproduce the behavior:
 1. 
+
+**Current behavior**
+A clear and concise description of current behavior.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
@@ -20,8 +23,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
- - Node: [e.g. node18.14.0]
- - Serverless framework: [e.g. sls3.26.0]
+ - Node [e.g. Node 18.14.0]
+ - Serverless framework [e.g. Serverless 3.26.0]
 
 **Additional context**
 Add any other context about the problem here.
