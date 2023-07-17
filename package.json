@@ -34,7 +34,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint \"**/*.ts\" \"**/*.js\" --fix",
-    "format": "prettier --write \"**/*.ts\" \"**/*.js\""
+    "format": "prettier --write \"**/*.ts\" \"**/*.js\" \"**/*.md\""
   },
   "peerDependencies": {
     "serverless": "^3.26.0"

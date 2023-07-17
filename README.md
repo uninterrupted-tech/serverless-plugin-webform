@@ -6,6 +6,7 @@
 <p align="center">
 
 ## Description
+
 With Serverless Plugin Webform, you can automate the setup of essential AWS resources, including:
 
 - **DynamoDB**: A database to store all the necessary information about form submissions and visitors.
@@ -18,18 +19,19 @@ Additionally, as a user of this plugin, you have access to the following advance
 - **Slack Integration**: Connect your form to a Slack channel to receive real-time notifications about new messages.
 
 ## Table of Contents
+
 1. [Prerequisites](#prerequisites)
 1. [Installation](#installation)
 1. [Usage](#usage)
-    1. [Properties used in the form](#properties-used-in-the-form)
-    1. [reCAPTCHA configuration](#recaptcha-configuration)
-    1. [DynamoDB configuration](#dynamodb-configuration)
-    1. [Lambda configuration](#lambda-configuration)
-    1. [Simple Email Service configuration](#simple-email-service-configuration)
-    1. [Slack configuration](#slack-configuration)
+   1. [Properties used in the form](#properties-used-in-the-form)
+   1. [reCAPTCHA configuration](#recaptcha-configuration)
+   1. [DynamoDB configuration](#dynamodb-configuration)
+   1. [Lambda configuration](#lambda-configuration)
+   1. [Simple Email Service configuration](#simple-email-service-configuration)
+   1. [Slack configuration](#slack-configuration)
 1. [Content files](#content-files)
-    1. [Replacement tags](#replacement-tags)
-    1. [Default values](#default-values)
+   1. [Replacement tags](#replacement-tags)
+   1. [Default values](#default-values)
 1. [Error codes](#error-codes)
 1. [Future development](#future-development)
 1. [Something about us](#something-about-us)
@@ -45,12 +47,15 @@ To use this plugin, you need to have the following prerequisites installed and c
 ## Installation
 
 1. Install the Serverless Form Plugin by running the following command in your project's root directory:
+
 ```
 npm install @uninterrupted/serverless-form-plugin
 ```
+
 ```
 yarn add @uninterrupted/serverless-form-plugin
 ```
+
 ```
 pnpm add @uninterrupted/serverless-form-plugin
 ```
@@ -60,6 +65,7 @@ pnpm add @uninterrupted/serverless-form-plugin
 3. Configure your AWS credentials. Refer to the AWS documentation for more information.
 
 4. Add `dist` to your `.gitignore` since that directory will be contain bundled code of lambda.
+
 ## Usage
 
 Configuration of the plugin is done using the plugin parameters, which you can specify under the `pluginWebform` field in the `custom` section of your `serverless.yaml` file.
@@ -98,7 +104,9 @@ captcha: # optional
   secret: secret # optional
   threshold: 0.8 # optional, default value: 0.5
 ```
->**IMPORTANT**: SECRET VALUE MUST BE LOADED USING AN ENVIRONMENT VARIABLE, NEVER PUT SENSITIVE DATA DIRECTLY IN YOUR CODE!!!
+
+> **IMPORTANT**: SECRET VALUE MUST BE LOADED USING AN ENVIRONMENT VARIABLE, NEVER PUT SENSITIVE DATA DIRECTLY IN YOUR CODE!!!
+
 - `secret` - reCAPTCHA secret value
 - `threshold` - value determining when a request performer is treated as a bot (check the [link](https://developers.google.com/recaptcha/docs/v3#interpreting_the_score))
 
@@ -135,7 +143,7 @@ ses: #required
     - notification@address.com
     - notification@address2.com
   visitorNotification:
-    subject: 'New message' # optional, default value: "New message"
+    subject: "New message" # optional, default value: "New message"
     text: ./templates/visitor-notification.txt # optional
     html: ./templates/visitor-notification.html # optional
   visitorConfirmation:
@@ -174,7 +182,8 @@ slack: # optional
 - `message` - path to the message content file
 - `iconEmoji` - icon emoji of the channel. You can use any emoji declared [here](https://www.webfx.com/tools/emoji-cheat-sheet/)
 
-Check the [link](https://api.slack.com/messaging/webhooks) to get learn how to generate Slack incoming webhook URL 
+Check the [link](https://api.slack.com/messaging/webhooks) to get learn how to generate Slack incoming webhook URL
+
 ## Content files
 
 Both Slack and SES use content files to load content for messages/mails, where you can easily define your own messages.
@@ -195,12 +204,14 @@ You can use replacement tags in templates such as:
 You can use default values for templates. If you don't provide any values for the `visitorConfirmation` and `visitorNotification` templates, your emails will look like this:
 
 **Visitor Confirmation**
+
 ```
 Thank you {{ firstName }} for reaching out.
 We received your email and will get back to you as soon as possible.
 ```
 
 **Visitor Notification**
+
 ```
 Hello, a new message was received from {{ firstName }} ({{ email }}) ({{ phoneNumber }}):
 {{ message }}
@@ -210,24 +221,27 @@ Hello, a new message was received from {{ firstName }} ({{ email }}) ({{ phoneNu
 
 If an error occurs, the lambda returns a short number that indicates the root cause of the error. Here is a table of all possible errors:
 
-| Error code | Description                            |
-| :--------: | :------------------------------------- |
-|   10000    | Unknown error                          |
-|   10001    | Honeypot check failed                  |
-|   10002    | reCAPTCHA check failed                 |
-|   10003    | SES error                              |
-|   10004    | DynamoDB error                         |
-|   10005    | Slack error                            |
+| Error code | Description            |
+| :--------: | :--------------------- |
+|   10000    | Unknown error          |
+|   10001    | Honeypot check failed  |
+|   10002    | reCAPTCHA check failed |
+|   10003    | SES error              |
+|   10004    | DynamoDB error         |
+|   10005    | Slack error            |
 
 # Future development
+
 As the creators of the plugin we would like to make it open for development, and we are planning to add contributions and open it for reviews. We also don't stop, and we will still develop our solution.
 
 Here is our tasks for next releases:
+
 - Add unit tests
 - Add validation for plugin parameters
 - Migrate lambda's AWS SDK from v2 to v3
 
 # Something about us
+
 **Check [uninterrupted.tech](https://uninterrupted.tech) to meet our company and explore our range of professional services.**
 
 **Don't forget to explore our [blog](https://uninterrupted.tech/blog) as well! It's a treasure trove of valuable content covering various topics such as web development, DevOps, observability, and management.**
