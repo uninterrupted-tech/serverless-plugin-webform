@@ -6,7 +6,7 @@
 # Please use the following guidelines to format all your commit
 # messages:
 #
-#   <type>: <subject> #<issue_number>
+#   <type>: <subject>
 #
 # Please note that:
 # + <type> describes the kind of change that this commit is providing.
@@ -25,6 +25,5 @@
 #   * no capitalized first letter
 #   * no dot (.) at the end
 #
-# + <issue_number> is a number which indicate the issue, you can remove it and # if no issue related
 #
 # Thank you
