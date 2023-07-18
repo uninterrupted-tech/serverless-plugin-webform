@@ -49,18 +49,18 @@ To use this plugin, you need to have the following prerequisites installed and c
 1. Install the Serverless Form Plugin by running the following command in your project's root directory:
 
 ```
-npm install @uninterrupted/serverless-form-plugin
+npm install @uninterrupted/serverless-plugin-webform
 ```
 
 ```
-yarn add @uninterrupted/serverless-form-plugin
+yarn add @uninterrupted/serverless-plugin-webform
 ```
 
 ```
-pnpm add @uninterrupted/serverless-form-plugin
+pnpm add @uninterrupted/serverless-plugin-webform
 ```
 
-2. Add `serverless-form-plugin` to the `plugins` array in your `serverless.yaml` file.
+2. Add `@uninterrupted/serverless-plugin-webform` to the `plugins` array in your `serverless.yaml` file.
 
 3. Configure your AWS credentials. Refer to the AWS documentation for more information.
 
