@@ -232,13 +232,11 @@ If an error occurs, the lambda returns a short number that indicates the root ca
 
 # Future development
 
-As the creators of the plugin we would like to make it open for development, and we are planning to add contributions and open it for reviews. We also don't stop, and we will still develop our solution.
+We believe that collaboration and community involvement are vital for creating a robust and effective solution. As the creators of the plugin, we are excited to open it up for development and invite your contributions to make it even better.
 
-Here is our tasks for next releases:
+You can get involved by tackling various tasks and improvements through [GitHub Issues](https://github.com/uninterrupted-tech/serverless-plugin-webform/issues). Whether it's fixing bugs, adding new features, improving documentation, or enhancing overall usability, every contribution is valuable and greatly appreciated.
 
-- Add unit tests
-- Add validation for plugin parameters
-- Migrate lambda's AWS SDK from v2 to v3
+To contribute, simply head over to our GitHub repository, check out the existing issues, and feel free to open new ones if you have ideas or find areas that need attention.
 
 # Something about us
 
