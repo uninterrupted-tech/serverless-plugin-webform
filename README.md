@@ -77,6 +77,7 @@ custom:
 ```
 
 ### CORS configuration
+
 ```yaml
 allowOrigin: https://github.com/ # optional, default value: "*"
 ```

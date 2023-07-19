@@ -40,6 +40,7 @@ export const verifyCaptcha = async (
   const { got } = await import("got");
   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${config.captcha.secret}&response=${captchaResponseKey}`;
 
+  // TODO: Improve error handling
   try {
     const data = await got.post(url).json<CaptchaResponse>();
     return data;
