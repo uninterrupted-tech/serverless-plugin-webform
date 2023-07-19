@@ -76,6 +76,11 @@ custom:
     # Specify your plugin configuration here: properties, captcha, dynamoDb, lambda, ses, slack
 ```
 
+### CORS configuration
+```yaml
+allowOrigin: https://github.com/ # optional, default value: "*"
+```
+
 ### Properties used in the form
 
 ```yaml
