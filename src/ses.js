@@ -32,13 +32,13 @@ export class SesFormation {
       text: join(
         dirname,
         visitorConfirmation?.text
-          ? join("../../..", visitorConfirmation.text)
+          ? join("../../../..", visitorConfirmation.text)
           : "../default-templates/visitor-confirmation.txt",
       ),
       html: join(
         dirname,
         visitorConfirmation?.html
-          ? join("../../..", visitorConfirmation.html)
+          ? join("../../../..", visitorConfirmation.html)
           : "../default-templates/visitor-confirmation.html",
       ),
     };
@@ -50,13 +50,13 @@ export class SesFormation {
       text: join(
         dirname,
         visitorNotification?.text
-          ? join("../../..", visitorNotification.text)
+          ? join("../../../..", visitorNotification.text)
           : "../default-templates/visitor-notification.txt",
       ),
       html: join(
         dirname,
-        visitorConfirmation?.html
-          ? join("../../..", visitorNotification.html)
+        visitorNotification?.html
+          ? join("../../../..", visitorNotification.html)
           : "../default-templates/visitor-notification.html",
       ),
     };
