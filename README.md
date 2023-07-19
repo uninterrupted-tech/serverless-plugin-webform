@@ -79,7 +79,7 @@ custom:
 ### CORS configuration
 
 ```yaml
-allowOrigin: https://github.com/ # optional, default value: "*"
+allowOrigin: https://github.com # optional, default value: "*"
 ```
 
 ### Properties used in the form
