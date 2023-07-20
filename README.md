@@ -236,9 +236,10 @@ We received your email and will get back to you as soon as possible.
 ```
 Thank you {{ firstName }} for reaching out.
 We received your email and will get back to you as soon as possible.
-Please see your message below: 
+Please see your message below:
 {{ message }}
 ```
+
 ## Error codes
 
 If an error occurs, the lambda returns a short number that indicates the root cause of the error. Here is a table of all possible errors:
