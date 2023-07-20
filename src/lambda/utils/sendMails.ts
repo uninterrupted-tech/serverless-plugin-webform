@@ -57,19 +57,19 @@ export const sendMails = async ({
     phoneNumber,
   });
 
-  await sendMail({
-    destination: [visitorEmailAddress],
-    source: sourceEmailAddress,
-    data,
-    templateName: visitorConfirmation,
-  });
-
   if (ccMe) {
     await sendMail({
       destination: [visitorEmailAddress],
       source: sourceEmailAddress,
       data,
       templateName: visitorConfirmationWithMessage,
+    });
+  } else {
+    await sendMail({
+      destination: [visitorEmailAddress],
+      source: sourceEmailAddress,
+      data,
+      templateName: visitorConfirmation,
     });
   }
 
