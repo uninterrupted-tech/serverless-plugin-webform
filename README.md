@@ -153,11 +153,11 @@ ses: #required
     text: ./templates/visitor-notification.txt # optional
     html: ./templates/visitor-notification.html # optional
   visitorConfirmation:
-    subject: Hello {{name}}! # optional, default value: "Hello {{name}}!"
+    subject: Hello {{ name }}! # optional, default value: "Hello {{ name }}!"
     text: ./templates/visitor-confirmation.txt # optional
     html: ./templates/visitor-confirmation.html # optional
   visitorConfirmationWitMessage:
-    subject: Hello {{name}}! # optional, default value: "Hello {{name}}!"
+    subject: Hello {{ name }}! # optional, default value: "Hello {{ name }}!"
     text: ./templates/visitor-confirmation-with-message.txt # optional
     html: ./templates/visitor-confirmation-with-message.html # optional
 ```
