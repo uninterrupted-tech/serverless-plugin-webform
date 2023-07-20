@@ -3,8 +3,6 @@ import { join } from "path";
 
 import { getDirName } from "./utils.js";
 
-const LAMBDA_DEFAULT_NAME = "createVisitor";
-const LAMBDA_DEFAULT_MEMORY_SIZE = 1024;
 const LAMBDA_NODE18_RUNTIME = "nodejs18.x";
 const LAMBDA_NODE16_RUNTIME = "nodejs16.x";
 
@@ -13,12 +11,10 @@ const LAMBDA_DEFAULT_RUNTIME = LAMBDA_NODE18_RUNTIME;
 const SUPPORTED_RUNTIMES = [LAMBDA_NODE16_RUNTIME, LAMBDA_NODE18_RUNTIME];
 
 export class LambdaFormation {
-  constructor(runtime, lambdaParameters, logger) {
-    this.name = lambdaParameters?.name || LAMBDA_DEFAULT_NAME;
-    this.memorySize =
-      lambdaParameters?.memorySize || LAMBDA_DEFAULT_MEMORY_SIZE;
+  constructor(name, runtime, memorySize) {
+    this.name = name;
+    this.memorySize = memorySize;
     this.runtime = runtime || LAMBDA_DEFAULT_RUNTIME;
-    this.logger = logger;
 
     if (!SUPPORTED_RUNTIMES.includes(this.runtime)) {
       const error = `Provided NodeJS version is not supported. Please use any of supported versions: ${SUPPORTED_RUNTIMES}`;

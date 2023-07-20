@@ -1,18 +1,26 @@
+import {
+  BOT_VISITORS_DEFAULT_TABLE_NAME,
+  LAMBDA_DEFAULT_MEMORY_SIZE,
+  LAMBDA_DEFAULT_NAME,
+  VISITORS_DEFAULT_TABLE_NAME,
+} from "./constants.js";
 import { DynamoDBFormation } from "./dynamodb.js";
 import { getEnvironments } from "./environments.js";
 import { iamFormation } from "./iam.js";
 import { LambdaFormation } from "./lambda.js";
 import { SesFormation } from "./ses.js";
+import { generateResourceName } from "./utils.js";
 
 export default class ServerlessPluginWebform {
   constructor(serverless, _cli, { log }) {
     this.serverless = serverless;
     const {
       custom: { pluginWebform },
+      provider,
+      service,
     } = this.serverless.service;
 
     this.logger = log;
-
     const {
       allowOrigin,
       captcha: captchaParams,
@@ -23,26 +31,43 @@ export default class ServerlessPluginWebform {
       slack: slackParams,
     } = pluginWebform;
 
+    const lambdaName = generateResourceName(
+      provider.stage,
+      service,
+      lambdaParams?.name || LAMBDA_DEFAULT_NAME,
+    );
+    const visitorsTableName = generateResourceName(
+      provider.stage,
+      service,
+      dynamoDbParams?.visitorsTableName || VISITORS_DEFAULT_TABLE_NAME,
+    );
+    const botVisitorsTableName = generateResourceName(
+      provider.stage,
+      service,
+      dynamoDbParams?.botVisitorsTableName || BOT_VISITORS_DEFAULT_TABLE_NAME,
+    );
+
     this.environments = getEnvironments({
       allowOrigin,
       captcha: captchaParams,
-      dynamoDb: dynamoDbParams,
       properties,
       ses: sesParams,
       slack: slackParams,
+      visitorsTableName,
+      botVisitorsTableName,
     });
 
-    this.ses = new SesFormation(
-      this.serverless.service.provider.region,
-      sesParams,
-      this.logger,
-    );
+    this.ses = new SesFormation(provider.region, sesParams, this.logger);
+
     this.lambda = new LambdaFormation(
-      this.serverless.service.provider.runtime,
-      lambdaParams,
-      this.logger,
+      lambdaName,
+      provider.runtime,
+      lambdaParams?.memorySize || LAMBDA_DEFAULT_MEMORY_SIZE,
     );
-    this.dynamoDb = new DynamoDBFormation(dynamoDbParams, this.logger);
+    this.dynamoDb = new DynamoDBFormation(
+      visitorsTableName,
+      botVisitorsTableName,
+    );
 
     this.hooks = {
       "after:deploy:deploy": async () => this.afterDeploy(),
