@@ -172,7 +172,7 @@ ses: #required
   - `subject` - subject of the visitor confirmation email
   - `text` - path to the visitor confirmation text content file
   - `html` - path to the visitor confirmation HTML content file
-- `visitorConfirmationWithMessage` - template of email message which will be sent to the form user if it send `ccMe: true`
+- `visitorConfirmationWithMessage` - template of email message which will be sent to the form user if `ccMe: true`
   - `subject` - subject of the visitor confirmation with message email
   - `text` - path to the visitor confirmation with message text content file
   - `html` - path to the visitor confirmation with message HTML content file
