@@ -47,6 +47,7 @@ export const config = {
       getEnv("NOTIFICATION_EMAIL_ADDRESSES")?.split(",") || [],
     templates: {
       visitorConfirmation: "visitorConfirmationTemplate",
+      visitorConfirmationWithMessage: "visitorConfirmationWithMessageTemplate",
       notification: "visitorNotificationTemplate",
     },
   },

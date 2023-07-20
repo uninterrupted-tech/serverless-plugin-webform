@@ -15,8 +15,12 @@ const SANDBOX_MODE = Object.freeze({
 
 export class SesFormation {
   constructor(region, sesParameters, logger) {
-    const { sourceAddress, visitorConfirmation, visitorNotification } =
-      sesParameters;
+    const {
+      sourceAddress,
+      visitorConfirmation,
+      visitorConfirmationWithMessage,
+      visitorNotification,
+    } = sesParameters;
     this.logger = logger;
     this.region = region;
     this.sourceAddress = sourceAddress;
@@ -40,6 +44,24 @@ export class SesFormation {
         visitorConfirmation?.html
           ? join("../../../..", visitorConfirmation.html)
           : "../default-templates/visitor-confirmation.html",
+      ),
+    };
+
+    this.visitorConfirmationWithMessage = {
+      subject: visitorConfirmationWithMessage?.subject
+        ? visitorConfirmationWithMessage.subject
+        : VISITOR_CONFIRMATION_TEMPLATE_DEFAULT_SUBJECT,
+      text: join(
+        dirname,
+        visitorConfirmationWithMessage?.text
+          ? join("../../../..", visitorConfirmationWithMessage.text)
+          : "../default-templates/visitor-confirmation-with-message.txt",
+      ),
+      html: join(
+        dirname,
+        visitorConfirmationWithMessage?.html
+          ? join("../../../..", visitorConfirmationWithMessage.html)
+          : "../default-templates/visitor-confirmation-with-message.html",
       ),
     };
 
@@ -117,6 +139,10 @@ export class SesFormation {
       VisitorConfirmationTemplate: await this.templateFormation({
         name: "visitorConfirmationTemplate",
         ...this.visitorConfirmation,
+      }),
+      VisitorConfirmationWithMessageTemplate: await this.templateFormation({
+        name: "visitorConfirmationWithMessageTemplate",
+        ...this.visitorConfirmationWithMessage,
       }),
       VisitorNotificationTemplate: await this.templateFormation({
         name: "visitorNotificationTemplate",

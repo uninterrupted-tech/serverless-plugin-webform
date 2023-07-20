@@ -42,7 +42,11 @@ export const sendMails = async ({
   const {
     sourceEmailAddress,
     notificationEmailAddresses,
-    templates: { visitorConfirmation, notification },
+    templates: {
+      visitorConfirmation,
+      visitorConfirmationWithMessage,
+      notification,
+    },
   } = config.ses;
 
   const data = JSON.stringify({
@@ -53,12 +57,19 @@ export const sendMails = async ({
     phoneNumber,
   });
 
+  await sendMail({
+    destination: [visitorEmailAddress],
+    source: sourceEmailAddress,
+    data,
+    templateName: visitorConfirmation,
+  });
+
   if (ccMe) {
     await sendMail({
       destination: [visitorEmailAddress],
       source: sourceEmailAddress,
       data,
-      templateName: visitorConfirmation,
+      templateName: visitorConfirmationWithMessage,
     });
   }
 
