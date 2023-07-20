@@ -4,12 +4,9 @@ import {
 } from "./constants.js";
 
 export class DynamoDBFormation {
-  constructor(dynamoDbParameters) {
-    this.visitorsTableName =
-      dynamoDbParameters?.visitorsTableName || VISITORS_DEFAULT_TABLE_NAME;
-    this.botVisitorsTableName =
-      dynamoDbParameters?.botVisitorsTableName ||
-      BOT_VISITORS_DEFAULT_TABLE_NAME;
+  constructor(visitorsTableName, botVisitorsTableName) {
+    this.visitorsTableName = visitorsTableName;
+    this.botVisitorsTableName = botVisitorsTableName;
   }
 
   tableFormation(tableName, defaultName) {

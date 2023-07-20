@@ -30,3 +30,9 @@ export const minifyHTML = async (file) => {
     throw new Error(err);
   });
 };
+
+export const generateResourceName = (stage, service, name) => {
+  const serviceName = service ? `${service}-` : "";
+  const stageName = stage ? `${stage}-` : "";
+  return `${serviceName}${stageName}${name}`;
+};
