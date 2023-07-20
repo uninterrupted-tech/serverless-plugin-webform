@@ -42,7 +42,11 @@ export const sendMails = async ({
   const {
     sourceEmailAddress,
     notificationEmailAddresses,
-    templates: { visitorConfirmation, notification },
+    templates: {
+      visitorConfirmation,
+      visitorConfirmationWithMessage,
+      notification,
+    },
   } = config.ses;
 
   const data = JSON.stringify({
@@ -54,6 +58,13 @@ export const sendMails = async ({
   });
 
   if (ccMe) {
+    await sendMail({
+      destination: [visitorEmailAddress],
+      source: sourceEmailAddress,
+      data,
+      templateName: visitorConfirmationWithMessage,
+    });
+  } else {
     await sendMail({
       destination: [visitorEmailAddress],
       source: sourceEmailAddress,

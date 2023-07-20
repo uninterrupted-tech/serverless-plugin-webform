@@ -1,0 +1,4 @@
+Thank you {{ firstName }} for reaching out.
+We received your email and will get back to you as soon as possible.
+Please see your message below: 
+{{ message }}

@@ -153,21 +153,29 @@ ses: #required
     text: ./templates/visitor-notification.txt # optional
     html: ./templates/visitor-notification.html # optional
   visitorConfirmation:
-    subject: Hello {{name}}! # optional, default value: "Hello {{name}}!"
+    subject: Hello {{ name }}! # optional, default value: "Hello {{ name }}!"
     text: ./templates/visitor-confirmation.txt # optional
     html: ./templates/visitor-confirmation.html # optional
+  visitorConfirmationWitMessage:
+    subject: Hello {{ name }}! # optional, default value: "Hello {{ name }}!"
+    text: ./templates/visitor-confirmation-with-message.txt # optional
+    html: ./templates/visitor-confirmation-with-message.html # optional
 ```
 
 - `sourceAddress` - email address from which emails will be sent. Remember to confirm the email address identity in AWS.
 - `notificationAddresses` - list of addresses where notifications will be sent. If no values are provided, form owner notifications will be disabled.
-- `visitorNotification` - visitor notification template
+- `visitorNotification` - template of email message which will be sent to the form owner
   - `subject` - subject of the visitor notification email
   - `text` - path to the visitor notification text content file
   - `html` - path to the visitor notification HTML content file
-- `visitorConfirmation` - visitor confirmation template
+- `visitorConfirmation` - template of email message which is always send to the form user
   - `subject` - subject of the visitor confirmation email
   - `text` - path to the visitor confirmation text content file
   - `html` - path to the visitor confirmation HTML content file
+- `visitorConfirmationWithMessage` - template of email message which will be sent to the form user if `ccMe: true`
+  - `subject` - subject of the visitor confirmation with message email
+  - `text` - path to the visitor confirmation with message text content file
+  - `html` - path to the visitor confirmation with message HTML content file
 
 > Since the HTML file is used to define visually appealing messages, you also need to define a text message. Recipients whose email clients don't display HTML email will see this version of the email.
 
@@ -209,6 +217,13 @@ You can use replacement tags in templates such as:
 
 You can use default values for templates. If you don't provide any values for the `visitorConfirmation` and `visitorNotification` templates, your emails will look like this:
 
+**Visitor Notification**
+
+```
+Hello, a new message was received from {{ firstName }} ({{ email }}) ({{ phoneNumber }}):
+{{ message }}
+```
+
 **Visitor Confirmation**
 
 ```
@@ -216,10 +231,12 @@ Thank you {{ firstName }} for reaching out.
 We received your email and will get back to you as soon as possible.
 ```
 
-**Visitor Notification**
+**Visitor Confirmation With Message**
 
 ```
-Hello, a new message was received from {{ firstName }} ({{ email }}) ({{ phoneNumber }}):
+Thank you {{ firstName }} for reaching out.
+We received your email and will get back to you as soon as possible.
+Please see your message below:
 {{ message }}
 ```
 
