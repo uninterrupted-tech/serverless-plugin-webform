@@ -1,6 +1,6 @@
 {
   "name": "@uninterrupted/serverless-plugin-webform",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Powerful tool that simplifies the creation and management of forms in serverless applications.",
   "keywords": [
     "aws",
