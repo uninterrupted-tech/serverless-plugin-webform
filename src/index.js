@@ -55,6 +55,7 @@ export default class ServerlessPluginWebform {
       slack: slackParams,
       visitorsTableName,
       botVisitorsTableName,
+      stageName: provider.stage,
     });
 
     this.ses = new SesFormation(provider.region, sesParams, this.logger);
@@ -79,7 +80,9 @@ export default class ServerlessPluginWebform {
     const definedFunctions = this.serverless.service?.functions;
     const definedProvider = this.serverless.service.provider;
 
-    const sesResources = await this.ses.resourcesFormation();
+    const sesResources = await this.ses.resourcesFormation(
+      definedProvider.stage,
+    );
     const dynamoDbResources = this.dynamoDb.resourcesFormation();
     this.serverless.extendConfiguration(["resources"], {
       Resources: {

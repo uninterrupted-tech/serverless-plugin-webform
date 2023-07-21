@@ -13,6 +13,7 @@ import {
 const MANDATORY_ENVIRONMENTS_VARIABLE = [
   "AWS_REGION",
   "SOURCE_EMAIL_ADDRESS",
+  "STAGE",
 ] as const;
 
 type MandatoryEnvironments = (typeof MANDATORY_ENVIRONMENTS_VARIABLE)[number];
@@ -33,6 +34,8 @@ function getEnv(env: string): string | undefined {
   return value;
 }
 
+const stage = getEnv("STAGE");
+
 export const config = {
   awsRegion: getEnv("AWS_REGION"),
   dynamoDb: {
@@ -46,9 +49,9 @@ export const config = {
     notificationEmailAddresses:
       getEnv("NOTIFICATION_EMAIL_ADDRESSES")?.split(",") || [],
     templates: {
-      visitorConfirmation: "visitorConfirmationTemplate",
-      visitorConfirmationWithMessage: "visitorConfirmationWithMessageTemplate",
-      notification: "visitorNotificationTemplate",
+      visitorConfirmation: `visitorConfirmationTemplate-${stage}`,
+      visitorConfirmationWithMessage: `visitorConfirmationWithMessageTemplate-${stage}`,
+      notification: `visitorNotificationTemplate-${stage}`,
     },
   },
   // Honeypot method is used to protect forms against spammers
