@@ -14,6 +14,7 @@ export const getEnvironments = ({
   slack,
   visitorsTableName,
   botVisitorsTableName,
+  serviceName,
   stageName,
 }) => {
   return {
@@ -42,6 +43,7 @@ export const getEnvironments = ({
         ? readFileToString(slack.message)
         : undefined,
       STAGE: stageName,
+      SERVICE: serviceName,
     },
   };
 };
