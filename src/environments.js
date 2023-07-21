@@ -14,6 +14,8 @@ export const getEnvironments = ({
   slack,
   visitorsTableName,
   botVisitorsTableName,
+  serviceName,
+  stageName,
 }) => {
   return {
     environment: {
@@ -40,6 +42,8 @@ export const getEnvironments = ({
       SLACK_WEBHOOK_MESSAGE: slack?.message
         ? readFileToString(slack.message)
         : undefined,
+      STAGE: stageName,
+      SERVICE: serviceName,
     },
   };
 };
