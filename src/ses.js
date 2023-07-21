@@ -137,15 +137,15 @@ export class SesFormation {
   async resourcesFormation(stage) {
     return {
       VisitorConfirmationTemplate: await this.templateFormation({
-        name: `visitorConfirmationTemplate-${stage}`,
+        name: `${stage}-visitorConfirmationTemplate`,
         ...this.visitorConfirmation,
       }),
       VisitorConfirmationWithMessageTemplate: await this.templateFormation({
-        name: `visitorConfirmationWithMessageTemplate-${stage}`,
+        name: `${stage}-visitorConfirmationWithMessageTemplate`,
         ...this.visitorConfirmationWithMessage,
       }),
       VisitorNotificationTemplate: await this.templateFormation({
-        name: `visitorNotificationTemplate-${stage}`,
+        name: `${stage}-visitorNotificationTemplate`,
         ...this.visitorNotification,
       }),
     };

@@ -49,9 +49,9 @@ export const config = {
     notificationEmailAddresses:
       getEnv("NOTIFICATION_EMAIL_ADDRESSES")?.split(",") || [],
     templates: {
-      visitorConfirmation: `visitorConfirmationTemplate-${stage}`,
-      visitorConfirmationWithMessage: `visitorConfirmationWithMessageTemplate-${stage}`,
-      notification: `visitorNotificationTemplate-${stage}`,
+      visitorConfirmation: `${stage}-visitorConfirmationTemplate`,
+      visitorConfirmationWithMessage: `${stage}-visitorConfirmationWithMessageTemplate`,
+      notification: `${stage}-visitorNotificationTemplate`,
     },
   },
   // Honeypot method is used to protect forms against spammers
