@@ -27,6 +27,7 @@ export class SesFormation {
     this.sesClient = new SES({
       region,
     });
+    this.domain = this.getDomain(this.sourceAddress);
 
     const dirname = getDirName(import.meta.url);
     this.visitorConfirmation = {
@@ -103,12 +104,15 @@ export class SesFormation {
     try {
       const { VerificationAttributes } =
         await this.sesClient.getIdentityVerificationAttributes({
-          Identities: [this.sourceAddress],
+          Identities: [this.domain, this.sourceAddress],
         });
+
+      const isIdentityVerified = (identity) =>
+        VerificationAttributes[identity]?.VerificationStatus === "Success";
+
       if (
-        this.sourceAddress in VerificationAttributes &&
-        VerificationAttributes[this.sourceAddress].VerificationStatus ===
-          "Success"
+        isIdentityVerified(this.domain) ||
+        isIdentityVerified(this.sourceAddress)
       ) {
         return;
       } else {
@@ -149,5 +153,14 @@ export class SesFormation {
         ...this.visitorNotification,
       }),
     };
+  }
+
+  getDomain(identity) {
+    const atIndex = identity.indexOf("@");
+    if (atIndex === -1) {
+      return identity;
+    }
+
+    return identity.slice(atIndex + 1, identity.length);
   }
 }
