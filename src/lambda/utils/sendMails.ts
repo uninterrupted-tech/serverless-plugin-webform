@@ -8,6 +8,7 @@ type SendMailArgs = {
   source: string;
   data: string;
   templateName: string;
+  replyTo?: string;
 };
 
 const sendMail = async ({
@@ -15,6 +16,7 @@ const sendMail = async ({
   source,
   data,
   templateName,
+  replyTo,
 }: SendMailArgs) => {
   try {
     await sesClient
@@ -25,6 +27,7 @@ const sendMail = async ({
         Source: source,
         Template: templateName,
         TemplateData: data,
+        ReplyToAddresses: replyTo ? [replyTo] : undefined,
       })
       .promise();
   } catch (err) {
@@ -79,6 +82,7 @@ export const sendMails = async ({
       source: sourceEmailAddress,
       data,
       templateName: notification,
+      replyTo: visitorEmailAddress,
     });
   }
 };
