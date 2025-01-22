@@ -3,12 +3,17 @@ import { join } from "path";
 
 import { getDirName } from "./utils.js";
 
-const LAMBDA_NODE18_RUNTIME = "nodejs18.x";
 const LAMBDA_NODE16_RUNTIME = "nodejs16.x";
+const LAMBDA_NODE18_RUNTIME = "nodejs18.x";
+const LAMBDA_NODE20_RUNTIME = "nodejs20.x";
 
-const LAMBDA_DEFAULT_RUNTIME = LAMBDA_NODE18_RUNTIME;
+const LAMBDA_DEFAULT_RUNTIME = LAMBDA_NODE20_RUNTIME;
 
-const SUPPORTED_RUNTIMES = [LAMBDA_NODE16_RUNTIME, LAMBDA_NODE18_RUNTIME];
+const SUPPORTED_RUNTIMES = [
+  LAMBDA_NODE16_RUNTIME,
+  LAMBDA_NODE18_RUNTIME,
+  LAMBDA_NODE20_RUNTIME,
+];
 
 export class LambdaFormation {
   constructor(name, runtime, memorySize) {
@@ -26,6 +31,7 @@ export class LambdaFormation {
   slsRuntimeToEsbuildTargetMap = {
     [LAMBDA_NODE16_RUNTIME]: "node16",
     [LAMBDA_NODE18_RUNTIME]: "node18",
+    [LAMBDA_NODE20_RUNTIME]: "node20",
   };
 
   async bundle() {
