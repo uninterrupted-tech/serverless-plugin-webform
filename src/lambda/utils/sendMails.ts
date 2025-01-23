@@ -31,8 +31,8 @@ const sendMail = async ({
         ReplyToAddresses: replyTo ? [replyTo] : undefined,
       })
       .promise();
-  } catch (err) {
-    throw new Error(`An error occurred while sending ${templateName}: ${err}`);
+  } catch (error) {
+    logger.error(`An error occurred while sending ${templateName}`, { error });
   }
 };
 
@@ -86,14 +86,15 @@ export const sendMails = async ({
   }
 
   if (notificationEmailAddresses.length) {
-    logger.debug("Sending notification mail");
-    await sendMail({
+    const args: SendMailArgs = {
       destination: notificationEmailAddresses,
       source: sourceEmailAddress,
       data,
       templateName: notification,
       replyTo: visitorEmailAddress,
-    });
+    };
+    logger.debug("Sending notification mail", { args });
+    await sendMail(args);
     logger.debug("Notification mail sent successfully");
   } else {
     logger.debug("Notification email addresses not defined", {
