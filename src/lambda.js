@@ -23,7 +23,6 @@ export class LambdaFormation {
 
     if (!SUPPORTED_RUNTIMES.includes(this.runtime)) {
       const error = `Provided NodeJS version is not supported. Please use any of supported versions: ${SUPPORTED_RUNTIMES}`;
-      this.logger.error(error);
       throw error;
     }
   }
@@ -37,20 +36,16 @@ export class LambdaFormation {
   async bundle() {
     const dirname = getDirName(import.meta.url);
     const path = join(dirname, "/lambda/createVisitor.ts");
-    try {
-      await build({
-        entryPoints: [path],
-        outfile: "dist/createVisitor.js",
-        bundle: true,
-        minify: true,
-        sourcemap: true,
-        platform: "node",
-        target: this.slsRuntimeToEsbuildTargetMap[this.runtime],
-      });
-    } catch (error) {
-      this.logger.error("Bundling failed");
-      throw error;
-    }
+
+    await build({
+      entryPoints: [path],
+      outfile: "dist/createVisitor.js",
+      bundle: true,
+      minify: true,
+      sourcemap: true,
+      platform: "node",
+      target: this.slsRuntimeToEsbuildTargetMap[this.runtime],
+    });
   }
 
   functionFormation() {
