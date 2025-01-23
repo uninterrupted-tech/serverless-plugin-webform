@@ -198,6 +198,23 @@ slack: # optional
 
 Check the [link](https://api.slack.com/messaging/webhooks) to get learn how to generate Slack incoming webhook URL
 
+### Log level
+
+```yaml
+logLevel: debug # optional, default value: "info"
+```
+
+The plugin uses [Pino](https://getpino.io) for logging under the hood. You can set the following log levels:
+
+- `fatal`
+- `error`
+- `warn`
+- `info` (default)
+- `debug`
+- `trace`
+
+Setting a specific level will show all logs of that level and higher. For example, setting `logLevel: debug` will show debug logs and all levels above it (info, warn, error, fatal).
+
 ## Content files
 
 Both Slack and SES use content files to load content for messages/mails, where you can easily define your own messages.

@@ -16,6 +16,7 @@ export const getEnvironments = ({
   botVisitorsTableName,
   serviceName,
   stageName,
+  logLevel,
 }) => {
   return {
     environment: {
@@ -44,6 +45,7 @@ export const getEnvironments = ({
         : undefined,
       STAGE: stageName,
       SERVICE: serviceName,
+      LOG_LEVEL: logLevel || "info",
     },
   };
 };
