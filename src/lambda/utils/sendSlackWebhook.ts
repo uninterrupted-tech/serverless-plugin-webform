@@ -1,4 +1,5 @@
 import { config } from "../config";
+import { logger } from "../logger";
 import { getFirstName } from "./getFirstName";
 
 type SendSlackWebhookArgs = {
@@ -45,6 +46,9 @@ export const sendSlackWebhook = async ({
   );
 
   try {
+    logger.debug(
+      `Sending Slack notification to ${slack.webhookUrl} | ${slack.webhookChannel}`,
+    );
     await got.post(slack.webhookUrl, {
       json: {
         channel: slack.webhookChannel,
@@ -53,7 +57,9 @@ export const sendSlackWebhook = async ({
         icon_emoji: slack.emoji,
       },
     });
+    logger.debug("Slack notification sent successfully");
   } catch (error) {
-    console.error(error);
+    logger.error(`Unable to send Slack notification`, { error });
+    throw error;
   }
 };

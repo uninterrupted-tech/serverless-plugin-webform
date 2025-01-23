@@ -39,6 +39,7 @@ const stage = getEnv("STAGE");
 const service = getEnv("SERVICE");
 
 export const config = {
+  logLevel: getEnv("LOG_LEVEL") || "info",
   awsRegion: getEnv("AWS_REGION"),
   dynamoDb: {
     visitorsTableName:
