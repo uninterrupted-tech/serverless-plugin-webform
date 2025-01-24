@@ -177,7 +177,27 @@ ses: #required
   - `text` - path to the visitor confirmation with message text content file
   - `html` - path to the visitor confirmation with message HTML content file
 
-> Since the HTML file is used to define visually appealing messages, you also need to define a text message. Recipients whose email clients don't display HTML email will see this version of the email.
+Since the HTML file is used to define visually appealing messages, you also need to define a text message. Recipients whose email clients don't display HTML email will see this version of the email. Each email template requires **two versions**:
+
+1. HTML file (`.html`) - Rich formatted version
+2. Text file (`.txt`) - Plain text fallback
+
+> ⚠️ **CRITICAL WARNING**:
+> The content in both files must match exactly. Any discrepancy between HTML and text versions will cause SES to silently fail - emails won't be sent and no error will be thrown.
+
+Example:
+
+```html
+<!-- template.html -->
+<h1>Thank you!</h1>
+<p>We received your mail.</p>
+```
+
+```
+// template.txt
+Thank you!
+We received your mail.
+```
 
 ### Slack configuration
 
