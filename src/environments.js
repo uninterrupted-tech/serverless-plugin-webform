@@ -1,5 +1,5 @@
 import {
-  DESCRIPTION_DEFAULT_PROPERTY_NAME,
+  MESSAGE_DEFAULT_PROPERTY_NAME,
   EMAIL_DEFAULT_PROPERTY_NAME,
   NAME_DEFAULT_PROPERTY_NAME,
   PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
@@ -29,18 +29,18 @@ export const getEnvironments = ({
         : undefined,
       EMAIL_FORM_ID: properties?.email?.name || EMAIL_DEFAULT_PROPERTY_NAME,
       NAME_FORM_ID: properties?.name?.name || NAME_DEFAULT_PROPERTY_NAME,
-      DESCRIPTION_FORM_ID:
-        properties?.description?.name || DESCRIPTION_DEFAULT_PROPERTY_NAME,
+      MESSAGE_FORM_ID:
+        properties?.message?.name || MESSAGE_DEFAULT_PROPERTY_NAME,
       PHONE_NUMBER_FORM_ID:
         properties?.phoneNumber?.name || PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
       ALLOW_ORIGIN: allowOrigin,
       CAPTCHA_SECRET: captcha?.secret,
       CAPTCHA_SUCCESS_THRESHOLD: captcha?.threshold,
-      SLACK_WEBHOOK_URL: slack?.url,
-      SLACK_WEBHOOK_CHANNEL: slack?.channel,
-      SLACK_WEBHOOK_USERNAME: slack?.username,
+      SLACK_TOKEN: slack?.token,
+      SLACK_CHANNEL: slack?.channel,
+      SLACK_USERNAME: slack?.username,
       SLACK_ICON_EMOJI: slack?.iconEmoji,
-      SLACK_WEBHOOK_MESSAGE: slack?.message
+      SLACK_MESSAGE: slack?.message
         ? readFileToString(slack.message)
         : undefined,
       STAGE: stageName,

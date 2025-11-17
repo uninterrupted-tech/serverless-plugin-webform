@@ -2,7 +2,7 @@ import {
   ALLOW_ORIGIN_DEFAULT_VALUE,
   BOT_VISITORS_DEFAULT_TABLE_NAME,
   CAPTCHA_DEFAULT_THRESHOLD,
-  DESCRIPTION_DEFAULT_PROPERTY_NAME,
+  MESSAGE_DEFAULT_PROPERTY_NAME,
   EMAIL_DEFAULT_PROPERTY_NAME,
   NAME_DEFAULT_PROPERTY_NAME,
   PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
@@ -61,8 +61,7 @@ export const config = {
   formIds: {
     email: getEnv("EMAIL_FORM_ID") || EMAIL_DEFAULT_PROPERTY_NAME,
     name: getEnv("NAME_FORM_ID") || NAME_DEFAULT_PROPERTY_NAME,
-    description:
-      getEnv("DESCRIPTION_FORM_ID") || DESCRIPTION_DEFAULT_PROPERTY_NAME,
+    message: getEnv("MESSAGE_FORM_ID") || MESSAGE_DEFAULT_PROPERTY_NAME,
     phoneNumber:
       getEnv("PHONE_NUMBER_FORM_ID") || PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
     captchaResponseKey: "g-recaptcha-response",
@@ -77,10 +76,10 @@ export const config = {
       Number(getEnv("CAPTCHA_SUCCESS_THRESHOLD")) || CAPTCHA_DEFAULT_THRESHOLD,
   },
   slack: {
-    webhookUrl: getEnv("SLACK_WEBHOOK_URL"),
-    webhookChannel: getEnv("SLACK_WEBHOOK_CHANNEL"),
-    webhookUsername: getEnv("SLACK_WEBHOOK_USERNAME"),
-    webhookMessage: getEnv("SLACK_WEBHOOK_MESSAGE") || "",
+    token: getEnv("SLACK_TOKEN"),
+    channel: getEnv("SLACK_CHANNEL"),
+    username: getEnv("SLACK_USERNAME"),
+    message: getEnv("SLACK_MESSAGE") || "",
     emoji: getEnv("SLACK_ICON_EMOJI") || SLACK_DEFAULT_ICON_EMOJI,
   },
 };
@@ -88,5 +87,5 @@ export const config = {
 export const isHoneypotEnabled = !(
   config.formIds.email === EMAIL_DEFAULT_PROPERTY_NAME &&
   config.formIds.name === NAME_DEFAULT_PROPERTY_NAME &&
-  config.formIds.description === DESCRIPTION_DEFAULT_PROPERTY_NAME
+  config.formIds.message === MESSAGE_DEFAULT_PROPERTY_NAME
 );

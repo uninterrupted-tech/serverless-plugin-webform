@@ -8,7 +8,7 @@ const schemaContactUs = Joi.object({
     .email({ tlds: { allow: false } })
     .required(),
   name: Joi.string().max(80).required(),
-  description: Joi.string().max(2048).required(),
+  message: Joi.string().max(2048).required(),
   phoneNumber: Joi.string().max(15).optional(),
   ccMe: Joi.boolean().optional(),
   acceptPrivacyPolicy: Joi.boolean().valid(true).required(),
@@ -21,14 +21,14 @@ const checkHoneypot = (parsedBody: Record<string, unknown>): boolean => {
   const {
     email: emailHoneypot,
     name: nameHoneypot,
-    description: descriptionHoneypot,
+    message: messageHoneypot,
     phoneNumber: phoneNumberHoneypot,
   } = parsedBody;
 
   const isHoneypotCheckOk = !(
     emailHoneypot ||
     nameHoneypot ||
-    descriptionHoneypot ||
+    messageHoneypot ||
     phoneNumberHoneypot
   );
 
@@ -38,7 +38,7 @@ const checkHoneypot = (parsedBody: Record<string, unknown>): boolean => {
 export type VisitorForm = {
   email: string;
   name: string;
-  description: string;
+  message: string;
   phoneNumber: string;
   ccMe: boolean;
   acceptPrivacyPolicy: boolean;
@@ -46,7 +46,7 @@ export type VisitorForm = {
 };
 
 export type HoneypotValues = {
-  description: string;
+  message: string;
   email: string;
   name: string;
   phoneNumber: string;
@@ -76,7 +76,7 @@ export const validateCreateVisitorBody = async (
 
   const email = parsedBody[config.formIds.email];
   const name = parsedBody[config.formIds.name];
-  const description = parsedBody[config.formIds.description];
+  const message = parsedBody[config.formIds.message];
   const phoneNumber = parsedBody[config.formIds.phoneNumber];
   const captchaResponseKey = parsedBody[config.formIds.captchaResponseKey];
   const { ccMe, acceptPrivacyPolicy } = parsedBody;
@@ -84,7 +84,7 @@ export const validateCreateVisitorBody = async (
   const visitorForm: VisitorForm = await schemaContactUs.validateAsync({
     email,
     name,
-    description,
+    message,
     phoneNumber,
     ccMe,
     captchaResponseKey,
@@ -92,7 +92,7 @@ export const validateCreateVisitorBody = async (
   });
 
   const honeypotValues: HoneypotValues = {
-    description: parsedBody.description,
+    message: parsedBody.message,
     email: parsedBody.email,
     name: parsedBody.name,
     phoneNumber: parsedBody.phoneNumber,

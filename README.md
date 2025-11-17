@@ -92,14 +92,14 @@ properties: # optional
     name: wmhhgio # optional, default value: "name"
   phoneNumber:
     name: idocynv # optional, default value: "phoneNumber"
-  description:
-    name: xhqpdaf # optional, default value: "description"
+  message:
+    name: xhqpdaf # optional, default value: "message"
 ```
 
 - `email` - visitor's email
 - `name` - visitor's name
 - `phoneNumber` - visitor's phone number
-- `description` - visitor's message
+- `message` - visitor's message
 
 Using custom property names allows developers to use honeypot technique. Read more about it [here](https://dev.to/felipperegazio/how-to-create-a-simple-honeypot-to-protect-your-web-forms-from-spammers--25n8).
 
@@ -203,20 +203,26 @@ We received your mail.
 
 ```yaml
 slack: # optional
-  url: https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX # required
+  token: xoxb-your-bot-token # required
   channel: "#web-form-notifications" # required
   username: webhook-bot # required
   message: ./slack/message.txt # required
   iconEmoji: ":email:" # optional, default value: ":email:"
 ```
 
-- `url` - Slack incoming webhook URL
-- `channel` - Slack channel name
+- `token` - Slack Bot User OAuth Token (starts with `xoxb-`)
+- `channel` - Slack channel name (e.g., `#web-form-notifications`) or channel ID
 - `username` - author's username for messages
 - `message` - path to the message content file
 - `iconEmoji` - icon emoji of the channel. You can use any emoji declared [here](https://www.webfx.com/tools/emoji-cheat-sheet/)
 
-Check the [link](https://api.slack.com/messaging/webhooks) to get learn how to generate Slack incoming webhook URL
+To get a Slack Bot token:
+
+1. Create a new Slack App at [api.slack.com/apps](https://api.slack.com/apps)
+2. Add the `chat:write` bot token scope under "OAuth & Permissions"
+3. Install the app to your workspace
+4. Copy the "Bot User OAuth Token" (starts with `xoxb-`)
+5. Invite the bot to your target channel
 
 ### Log level
 

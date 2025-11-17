@@ -44,8 +44,8 @@
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.369.0",
+    "@slack/web-api": "^7.0.0",
     "esbuild": "^0.18.9",
-    "got": "^12.6.0",
     "joi": "^17.6.0",
     "minify": "^10.2.0",
     "pino": "^9.6.0"
