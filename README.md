@@ -94,29 +94,45 @@ properties: # optional
     name: idocynv # optional, default value: "phoneNumber"
   message:
     name: xhqpdaf # optional, default value: "message"
+  recaptchaToken:
+    name: zkrmqpa # optional, default value: "recaptchaToken"
 ```
 
 - `email` - visitor's email
 - `name` - visitor's name
 - `phoneNumber` - visitor's phone number
 - `message` - visitor's message
+- `recaptchaToken` - reCAPTCHA token field name
 
 Using custom property names allows developers to use honeypot technique. Read more about it [here](https://dev.to/felipperegazio/how-to-create-a-simple-honeypot-to-protect-your-web-forms-from-spammers--25n8).
 
 ### reCAPTCHA configuration
 
+This plugin uses **Google reCAPTCHA Enterprise** for bot protection.
+
 ```yaml
 captcha: # optional
-  secret: secret # optional
+  projectId: my_landing_page # required if using reCAPTCHA
+  key: my_key # required if using reCAPTCHA
+  action: form_submit # required if using reCAPTCHA
   threshold: 0.8 # optional, default value: 0.5
 ```
 
-> **IMPORTANT**: SECRET VALUE MUST BE LOADED USING AN ENVIRONMENT VARIABLE, NEVER PUT SENSITIVE DATA DIRECTLY IN YOUR CODE!!!
+> **IMPORTANT**: SENSITIVE VALUES (projectId, key) MUST BE LOADED USING ENVIRONMENT VARIABLES, NEVER PUT SENSITIVE DATA DIRECTLY IN YOUR CODE!!!
 
-- `secret` - reCAPTCHA secret value
-- `threshold` - value determining when a request performer is treated as a bot (check the [link](https://developers.google.com/recaptcha/docs/v3#interpreting_the_score))
+- `projectId` - Your Google Cloud Project ID where reCAPTCHA Enterprise is configured
+- `key` - The reCAPTCHA site key associated with your site/app
+- `action` - Action name corresponding to the token (must match the action used in your frontend `grecaptcha.enterprise.execute()` call)
+- `threshold` - Score threshold (0.0 to 1.0) determining when a request performer is treated as a bot. Higher values are more restrictive. (check the [link](https://cloud.google.com/recaptcha-enterprise/docs/interpret-assessment))
 
-Check the [link](https://developers.google.com/recaptcha/intro) to get learn how to configure reCaptcha and generate secret.
+To set up reCAPTCHA Enterprise:
+
+1. Create a Google Cloud Project
+2. Enable the reCAPTCHA Enterprise API
+3. Create a site key for your website
+4. Configure the key and projectId in your `serverless.yaml`
+
+Check the [Google reCAPTCHA Enterprise documentation](https://cloud.google.com/recaptcha-enterprise/docs) to learn more about setup and configuration.
 
 ### DynamoDB configuration
 

@@ -1,11 +1,12 @@
 import {
   ALLOW_ORIGIN_DEFAULT_VALUE,
   BOT_VISITORS_DEFAULT_TABLE_NAME,
-  CAPTCHA_DEFAULT_THRESHOLD,
-  MESSAGE_DEFAULT_PROPERTY_NAME,
   EMAIL_DEFAULT_PROPERTY_NAME,
+  MESSAGE_DEFAULT_PROPERTY_NAME,
   NAME_DEFAULT_PROPERTY_NAME,
   PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
+  RECAPTCHA_DEFAULT_THRESHOLD,
+  RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
   SLACK_DEFAULT_ICON_EMOJI,
   VISITORS_DEFAULT_TABLE_NAME,
 } from "../constants";
@@ -64,16 +65,20 @@ export const config = {
     message: getEnv("MESSAGE_FORM_ID") || MESSAGE_DEFAULT_PROPERTY_NAME,
     phoneNumber:
       getEnv("PHONE_NUMBER_FORM_ID") || PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
-    captchaResponseKey: "g-recaptcha-response",
+    recaptchaToken:
+      getEnv("RECAPTCHA_TOKEN_FORM_ID") ||
+      RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
   },
   cors: {
     allowOrigin: getEnv("ALLOW_ORIGIN") || ALLOW_ORIGIN_DEFAULT_VALUE,
   },
   captcha: {
-    enabled: !!getEnv("CAPTCHA_SECRET"),
-    secret: getEnv("CAPTCHA_SECRET"),
+    enabled: !!(getEnv("CAPTCHA_PROJECT_ID") && getEnv("CAPTCHA_KEY")),
+    projectId: getEnv("CAPTCHA_PROJECT_ID"),
+    key: getEnv("CAPTCHA_KEY"),
+    action: getEnv("CAPTCHA_ACTION"),
     successThreshold:
-      Number(getEnv("CAPTCHA_SUCCESS_THRESHOLD")) || CAPTCHA_DEFAULT_THRESHOLD,
+      Number(getEnv("CAPTCHA_SUCCESS_THRESHOLD")) || RECAPTCHA_DEFAULT_THRESHOLD,
   },
   slack: {
     token: getEnv("SLACK_TOKEN"),
@@ -87,5 +92,6 @@ export const config = {
 export const isHoneypotEnabled = !(
   config.formIds.email === EMAIL_DEFAULT_PROPERTY_NAME &&
   config.formIds.name === NAME_DEFAULT_PROPERTY_NAME &&
-  config.formIds.message === MESSAGE_DEFAULT_PROPERTY_NAME
+  config.formIds.message === MESSAGE_DEFAULT_PROPERTY_NAME &&
+  config.formIds.recaptchaToken === RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME
 );
