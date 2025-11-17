@@ -42,7 +42,7 @@ export const handler: Handler = async (
   });
 
   const captchaResponse = await getCaptchaResponse(
-    visitorForm.captchaResponseKey,
+    visitorForm.recaptchaToken,
   );
   logger.debug("Captcha response received", { captchaResponse });
 

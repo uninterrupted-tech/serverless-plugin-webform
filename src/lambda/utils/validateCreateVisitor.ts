@@ -12,9 +12,10 @@ const schemaContactUs = Joi.object({
   phoneNumber: Joi.string().max(15).optional(),
   ccMe: Joi.boolean().optional(),
   acceptPrivacyPolicy: Joi.boolean().valid(true).required(),
-  captchaResponseKey: config.captcha.secret
-    ? Joi.string().required()
-    : Joi.string().optional(),
+  recaptchaToken:
+    config.captcha.enabled && config.captcha.projectId && config.captcha.key
+      ? Joi.string().required()
+      : Joi.string().optional(),
 });
 
 const checkHoneypot = (parsedBody: Record<string, unknown>): boolean => {
@@ -42,7 +43,7 @@ export type VisitorForm = {
   phoneNumber: string;
   ccMe: boolean;
   acceptPrivacyPolicy: boolean;
-  captchaResponseKey: string;
+  recaptchaToken: string;
 };
 
 export type HoneypotValues = {
@@ -78,7 +79,7 @@ export const validateCreateVisitorBody = async (
   const name = parsedBody[config.formIds.name];
   const message = parsedBody[config.formIds.message];
   const phoneNumber = parsedBody[config.formIds.phoneNumber];
-  const captchaResponseKey = parsedBody[config.formIds.captchaResponseKey];
+  const recaptchaToken = parsedBody[config.formIds.recaptchaToken];
   const { ccMe, acceptPrivacyPolicy } = parsedBody;
 
   const visitorForm: VisitorForm = await schemaContactUs.validateAsync({
@@ -87,7 +88,7 @@ export const validateCreateVisitorBody = async (
     message,
     phoneNumber,
     ccMe,
-    captchaResponseKey,
+    recaptchaToken,
     acceptPrivacyPolicy,
   });
 

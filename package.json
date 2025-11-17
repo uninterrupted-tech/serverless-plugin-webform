@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.369.0",
+    "@google-cloud/recaptcha-enterprise": "^6.3.1",
     "@slack/web-api": "^7.0.0",
     "esbuild": "^0.18.9",
     "joi": "^17.6.0",
