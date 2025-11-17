@@ -1,7 +1,7 @@
 export const EMAIL_DEFAULT_PROPERTY_NAME = "email";
 export const NAME_DEFAULT_PROPERTY_NAME = "name";
 export const ALLOW_ORIGIN_DEFAULT_VALUE = "*";
-export const DESCRIPTION_DEFAULT_PROPERTY_NAME = "description";
+export const MESSAGE_DEFAULT_PROPERTY_NAME = "message";
 export const PHONE_NUMBER_DEFAULT_PROPERTY_NAME = "phoneNumber";
 export const CAPTCHA_DEFAULT_THRESHOLD = 0.5;
 export const SLACK_DEFAULT_ICON_EMOJI = ":email:";

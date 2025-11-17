@@ -58,7 +58,7 @@ export const handler: Handler = async (
       }),
       sendSlackWebhook({
         email: visitorForm.email,
-        message: visitorForm.description,
+        message: visitorForm.message,
         name: visitorForm.name,
       }),
     ]);

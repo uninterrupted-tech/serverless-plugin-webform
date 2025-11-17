@@ -38,7 +38,7 @@ const sendMail = async ({
 
 export const sendMails = async ({
   email: visitorEmailAddress,
-  description,
+  message,
   name,
   ccMe,
   phoneNumber,
@@ -56,7 +56,7 @@ export const sendMails = async ({
   const data = JSON.stringify({
     firstName: getFirstName(name),
     email: visitorEmailAddress,
-    message: description,
+    message,
     fullName: name,
     phoneNumber,
   });
