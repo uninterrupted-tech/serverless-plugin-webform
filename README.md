@@ -1,9 +1,8 @@
 <p align="center">
-  <a href="https://uninterrupted.tech" target="_blank"><img src="https://s3.eu-west-1.amazonaws.com/static.uninterrupted.tech/logo.svg" width="500" alt="Uninterrupted logo"  /></a>
+<a href="https://u11d.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://u11d.com/static/u11d-white-b0b10621fc20805805f23cd6b8c349e0.svg"><source media="(prefers-color-scheme: light)" srcset="https://u11d.com/static/u11d-color-136ce418fbbb940b43748ef1bef30220.svg"><img alt="u11d logo" src="https://u11d.com/static/u11d-color-136ce418fbbb940b43748ef1bef30220.svg" width="150" height="50"></picture></a>
 </p>
 
 <p align="center">The Serverless Plugin Webform for AWS is a powerful tool that simplifies the creation and management of forms in serverless applications. </p>
-<p align="center">
 
 ## Description
 
