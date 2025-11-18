@@ -12,8 +12,8 @@ const schemaContactUs = Joi.object({
   phoneNumber: Joi.string().max(15).optional(),
   ccMe: Joi.boolean().optional(),
   acceptPrivacyPolicy: Joi.boolean().valid(true).required(),
-  recaptchaToken:
-    config.captcha.enabled && config.captcha.projectId && config.captcha.key
+  captchaToken:
+    config.captcha.enabled && config.captcha.projectId && config.captcha.siteKey
       ? Joi.string().required()
       : Joi.string().optional(),
 });
@@ -43,7 +43,7 @@ export type VisitorForm = {
   phoneNumber: string;
   ccMe: boolean;
   acceptPrivacyPolicy: boolean;
-  recaptchaToken: string;
+  captchaToken: string;
 };
 
 export type HoneypotValues = {
@@ -79,7 +79,7 @@ export const validateCreateVisitorBody = async (
   const name = parsedBody[config.formIds.name];
   const message = parsedBody[config.formIds.message];
   const phoneNumber = parsedBody[config.formIds.phoneNumber];
-  const recaptchaToken = parsedBody[config.formIds.recaptchaToken];
+  const captchaToken = parsedBody[config.formIds.captchaToken];
   const { ccMe, acceptPrivacyPolicy } = parsedBody;
 
   const visitorForm: VisitorForm = await schemaContactUs.validateAsync({
@@ -88,7 +88,7 @@ export const validateCreateVisitorBody = async (
     message,
     phoneNumber,
     ccMe,
-    recaptchaToken,
+    captchaToken,
     acceptPrivacyPolicy,
   });
 

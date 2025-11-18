@@ -1,12 +1,12 @@
 import {
   ALLOW_ORIGIN_DEFAULT_VALUE,
   BOT_VISITORS_DEFAULT_TABLE_NAME,
+  CAPTCHA_DEFAULT_THRESHOLD,
+  CAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
   EMAIL_DEFAULT_PROPERTY_NAME,
   MESSAGE_DEFAULT_PROPERTY_NAME,
   NAME_DEFAULT_PROPERTY_NAME,
   PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
-  RECAPTCHA_DEFAULT_THRESHOLD,
-  RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
   SLACK_DEFAULT_ICON_EMOJI,
   VISITORS_DEFAULT_TABLE_NAME,
 } from "../constants";
@@ -65,20 +65,21 @@ export const config = {
     message: getEnv("MESSAGE_FORM_ID") || MESSAGE_DEFAULT_PROPERTY_NAME,
     phoneNumber:
       getEnv("PHONE_NUMBER_FORM_ID") || PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
-    recaptchaToken:
-      getEnv("RECAPTCHA_TOKEN_FORM_ID") ||
-      RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
+    captchaToken:
+      getEnv("CAPTCHA_TOKEN_FORM_ID") || CAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
   },
   cors: {
     allowOrigin: getEnv("ALLOW_ORIGIN") || ALLOW_ORIGIN_DEFAULT_VALUE,
   },
   captcha: {
-    enabled: !!(getEnv("CAPTCHA_PROJECT_ID") && getEnv("CAPTCHA_KEY")),
+    enabled: !!(getEnv("CAPTCHA_PROJECT_ID") && getEnv("CAPTCHA_SITE_KEY")),
     projectId: getEnv("CAPTCHA_PROJECT_ID"),
-    key: getEnv("CAPTCHA_KEY"),
+    siteKey: getEnv("CAPTCHA_SITE_KEY"),
     action: getEnv("CAPTCHA_ACTION"),
     successThreshold:
-      Number(getEnv("CAPTCHA_SUCCESS_THRESHOLD")) || RECAPTCHA_DEFAULT_THRESHOLD,
+      Number(getEnv("CAPTCHA_SUCCESS_THRESHOLD")) || CAPTCHA_DEFAULT_THRESHOLD,
+    clientEmail: getEnv("CAPTCHA_CLIENT_EMAIL"),
+    privateKey: getEnv("CAPTCHA_PRIVATE_KEY"),
   },
   slack: {
     token: getEnv("SLACK_TOKEN"),
@@ -93,5 +94,5 @@ export const isHoneypotEnabled = !(
   config.formIds.email === EMAIL_DEFAULT_PROPERTY_NAME &&
   config.formIds.name === NAME_DEFAULT_PROPERTY_NAME &&
   config.formIds.message === MESSAGE_DEFAULT_PROPERTY_NAME &&
-  config.formIds.recaptchaToken === RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME
+  config.formIds.captchaToken === CAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME
 );

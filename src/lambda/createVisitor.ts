@@ -44,7 +44,7 @@ export const handler: Handler = async (
     "Validation passed successfully",
   );
 
-  const captchaResponse = await getCaptchaResponse(visitorForm.recaptchaToken);
+  const captchaResponse = await getCaptchaResponse(visitorForm.captchaToken);
   logger.debug({ captchaResponse }, "Captcha response received");
 
   try {

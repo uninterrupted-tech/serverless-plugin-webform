@@ -1,9 +1,9 @@
 import {
-  MESSAGE_DEFAULT_PROPERTY_NAME,
+  CAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
   EMAIL_DEFAULT_PROPERTY_NAME,
+  MESSAGE_DEFAULT_PROPERTY_NAME,
   NAME_DEFAULT_PROPERTY_NAME,
   PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
-  RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
 } from "./constants.js";
 import { readFileToString } from "./utils.js";
 
@@ -34,14 +34,15 @@ export const getEnvironments = ({
         properties?.message?.name || MESSAGE_DEFAULT_PROPERTY_NAME,
       PHONE_NUMBER_FORM_ID:
         properties?.phoneNumber?.name || PHONE_NUMBER_DEFAULT_PROPERTY_NAME,
-      RECAPTCHA_TOKEN_FORM_ID:
-        properties?.recaptchaToken?.name ||
-        RECAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
       ALLOW_ORIGIN: allowOrigin,
+      CAPTCHA_TOKEN_FORM_ID:
+        properties?.captchaToken?.name || CAPTCHA_TOKEN_DEFAULT_PROPERTY_NAME,
       CAPTCHA_PROJECT_ID: captcha?.projectId,
-      CAPTCHA_KEY: captcha?.key,
+      CAPTCHA_SITE_KEY: captcha?.siteKey,
       CAPTCHA_ACTION: captcha?.action,
       CAPTCHA_SUCCESS_THRESHOLD: captcha?.threshold,
+      CAPTCHA_CLIENT_EMAIL: captcha?.clientEmail,
+      CAPTCHA_PRIVATE_KEY: captcha?.privateKey,
       SLACK_TOKEN: slack?.token,
       SLACK_CHANNEL: slack?.channel,
       SLACK_USERNAME: slack?.username,
