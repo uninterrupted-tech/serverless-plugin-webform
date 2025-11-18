@@ -55,7 +55,7 @@ export const sendSlackWebhook = async ({
     });
     logger.debug("Slack notification sent successfully");
   } catch (error) {
-    logger.error(`Unable to send Slack notification`, { error });
+    logger.error({ error }, `Unable to send Slack notification`);
     throw error;
   }
 };

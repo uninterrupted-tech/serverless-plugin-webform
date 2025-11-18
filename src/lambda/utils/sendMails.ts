@@ -32,7 +32,7 @@ const sendMail = async ({
       })
       .promise();
   } catch (error) {
-    logger.error(`An error occurred while sending ${templateName}`, { error });
+    logger.error({ error }, `An error occurred while sending ${templateName}`);
   }
 };
 
@@ -93,12 +93,15 @@ export const sendMails = async ({
       templateName: notification,
       replyTo: visitorEmailAddress,
     };
-    logger.debug("Sending notification mail", { args });
+    logger.debug({ args }, "Sending notification mail");
     await sendMail(args);
     logger.debug("Notification mail sent successfully");
   } else {
-    logger.debug("Notification email addresses not defined", {
-      notificationEmailAddresses,
-    });
+    logger.debug(
+      {
+        notificationEmailAddresses,
+      },
+      "Notification email addresses not defined",
+    );
   }
 };
