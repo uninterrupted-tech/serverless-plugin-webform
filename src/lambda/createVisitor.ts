@@ -24,27 +24,28 @@ const ERROR_CODES = {
 export const handler: Handler = async (
   event: APIGatewayEvent,
 ): Promise<MinimalHttpResponse> => {
-  logger.debug("Creating a new visitor", { body: event.body });
+  logger.debug({ body: event.body }, "Creating a new visitor");
 
   let validationResult: CreateVisitorValidationResult;
   try {
     validationResult = await validateCreateVisitorBody(event.body);
   } catch (error) {
-    logger.error("Validation failed", { error });
+    logger.error({ error }, "Validation failed");
     return badRequestResponse(error);
   }
 
   const { honeypotValues, isHoneypotCheckOk, visitorForm } = validationResult;
-  logger.debug("Validation passed successfully", {
-    isHoneypotCheckOk,
-    visitorForm,
-    honeypotValues,
-  });
-
-  const captchaResponse = await getCaptchaResponse(
-    visitorForm.recaptchaToken,
+  logger.debug(
+    {
+      isHoneypotCheckOk,
+      visitorForm,
+      honeypotValues,
+    },
+    "Validation passed successfully",
   );
-  logger.debug("Captcha response received", { captchaResponse });
+
+  const captchaResponse = await getCaptchaResponse(visitorForm.recaptchaToken);
+  logger.debug({ captchaResponse }, "Captcha response received");
 
   try {
     logger.debug("Processing visitor data");
@@ -64,16 +65,19 @@ export const handler: Handler = async (
     ]);
 
     if (promiseResults.some((x) => x.status === "rejected")) {
-      logger.error("One or more promises failed", { promiseResults });
+      logger.error({ promiseResults }, "One or more promises failed");
       return internalServerErrorResponse;
     }
 
     const isHuman = checkIfHuman(isHoneypotCheckOk, captchaResponse);
-    logger.debug("Human verification result", {
-      isHuman,
-      isHoneypotCheckOk,
-      captchaScore: captchaResponse?.score,
-    });
+    logger.debug(
+      {
+        isHuman,
+        isHoneypotCheckOk,
+        captchaScore: captchaResponse?.score,
+      },
+      "Human verification result",
+    );
 
     if (isHuman) {
       logger.debug("Sending confirmation emails");
@@ -89,7 +93,7 @@ export const handler: Handler = async (
         captchaResponse &&
         (!captchaResponse.success || captchaResponse.score <= 0.5)
       ) {
-        logger.warn("Captcha check failed", { captchaResponse });
+        logger.warn({ captchaResponse }, "Captcha check failed");
         return badRequestResponse(ERROR_CODES.CAPTCHA_CHECK_FAILED);
       }
 
@@ -97,7 +101,7 @@ export const handler: Handler = async (
       return badRequestResponse(ERROR_CODES.UNKNOWN_ERROR);
     }
   } catch (error) {
-    logger.error("Unexpected error during visitor creation", { error });
+    logger.error({ error }, "Unexpected error during visitor creation");
     return internalServerErrorResponse;
   }
 };

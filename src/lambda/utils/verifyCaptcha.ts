@@ -112,7 +112,7 @@ export const verifyCaptcha = async (
       action: tokenAction,
     };
   } catch (error) {
-    logger.error("An error occurred while verifying captcha:", error);
+    logger.error({ error }, "An error occurred while verifying captcha");
     throw new Error(`An error occurred while verifying captcha: ${error}`);
   }
 };
