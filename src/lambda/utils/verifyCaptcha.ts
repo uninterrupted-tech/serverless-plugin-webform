@@ -1,4 +1,5 @@
 import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
+
 import { config } from "../config";
 import { logger } from "../logger";
 
@@ -20,9 +21,9 @@ export const EmptyCaptchaResponse: CaptchaResponse = {
 };
 
 export const getCaptchaResponse = (
-  recaptchaToken: string,
+  captchaToken: string,
 ): Promise<CaptchaResponse> | null =>
-  config.captcha.enabled ? verifyCaptcha(recaptchaToken) : null;
+  config.captcha.enabled ? verifyCaptcha(captchaToken) : null;
 
 export const checkIfHuman = (
   isHoneypotCheckOk: boolean,
@@ -39,23 +40,40 @@ export const checkIfHuman = (
 };
 
 export const verifyCaptcha = async (
-  recaptchaToken: string,
+  captchaToken: string,
 ): Promise<CaptchaResponse> => {
-  if (!config.captcha.projectId || !config.captcha.key) {
+  if (!config.captcha.projectId || !config.captcha.siteKey) {
     throw new Error(
-      "Captcha verification is enabled but projectId or key is missing in the configuration",
+      "Captcha verification is enabled but projectId or site key is missing in the configuration",
+    );
+  }
+
+  if (!config.captcha.clientEmail || !config.captcha.privateKey) {
+    throw new Error(
+      "Captcha verification is enabled but client email or private key is missing in the configuration",
     );
   }
 
   try {
-    const client = new RecaptchaEnterpriseServiceClient();
+    const privateKey = config.captcha.privateKey.includes("\\n")
+      ? config.captcha.privateKey.replace(/\\n/g, "\n")
+      : config.captcha.privateKey;
+
+    const credentials = {
+      client_email: config.captcha.clientEmail,
+      private_key: privateKey,
+    };
+
+    const client = new RecaptchaEnterpriseServiceClient({
+      credentials,
+    });
     const projectPath = client.projectPath(config.captcha.projectId);
 
     const request = {
       assessment: {
         event: {
-          token: recaptchaToken,
-          siteKey: config.captcha.key,
+          token: captchaToken,
+          siteKey: config.captcha.siteKey,
         },
       },
       parent: projectPath,

@@ -23,12 +23,15 @@ Additionally, as a user of this plugin, you have access to the following advance
 1. [Prerequisites](#prerequisites)
 1. [Installation](#installation)
 1. [Usage](#usage)
+1. [Configuration](#configuration)
+   1. [CORS configuration](#cors-configuration)
    1. [Properties used in the form](#properties-used-in-the-form)
    1. [reCAPTCHA configuration](#recaptcha-configuration)
    1. [DynamoDB configuration](#dynamodb-configuration)
    1. [Lambda configuration](#lambda-configuration)
    1. [Simple Email Service configuration](#simple-email-service-configuration)
    1. [Slack configuration](#slack-configuration)
+   1. [Log level](#log-level)
 1. [Content files](#content-files)
    1. [Replacement tags](#replacement-tags)
    1. [Default values](#default-values)
@@ -68,6 +71,52 @@ pnpm add @uninterrupted/serverless-plugin-webform
 
 ## Usage
 
+### Example payload
+
+When submitting a form to the Lambda endpoint, you need to send a POST request with a JSON payload. Here's an example of the expected request body structure:
+
+```json
+{
+  "email": "visitor@example.com",
+  "name": "John Doe",
+  "message": "Hello, I'm interested in your services.",
+  "phoneNumber": "+1234567890",
+  "ccMe": true,
+  "acceptPrivacyPolicy": true,
+  "captchaToken": "03AGdBq27..."
+}
+```
+
+**Field descriptions:**
+
+- `email` (required) - Visitor's email address (must be valid email format)
+- `name` (required) - Visitor's full name (max 80 characters)
+- `message` (required) - Visitor's message content (max 2048 characters)
+- `phoneNumber` (optional) - Visitor's phone number (max 15 characters)
+- `ccMe` (optional) - Boolean flag indicating if the visitor wants to receive a copy of their message
+- `acceptPrivacyPolicy` (required) - Must be `true` to accept the privacy policy
+- `captchaToken` (conditionally required) - Required if reCAPTCHA is configured in your plugin settings
+
+> **Note**: If you've configured custom property names (as described in [Properties used in the form](#properties-used-in-the-form)), use those custom names instead of the default ones shown above. For example, if you set `email.name: "jqxkuhh"`, use `"jqxkuhh"` as the field name instead of `"email"`.
+
+### Example with custom property names (honeypot technique)
+
+```json
+{
+  "jqxkuhh": "visitor@example.com",
+  "wmhhgio": "John Doe",
+  "xhqpdaf": "Hello, I'm interested in your services.",
+  "idocynv": "+1234567890",
+  "ccMe": true,
+  "acceptPrivacyPolicy": true,
+  "zkrmqpa": "03AGdBq27..."
+}
+```
+
+In this example, the actual visitor data is sent using custom field names, while the standard field names remain empty as honeypot fields to catch bots.
+
+## Configuration
+
 Configuration of the plugin is done using the plugin parameters, which you can specify under the `pluginWebform` field in the `custom` section of your `serverless.yaml` file.
 
 ```yaml
@@ -76,10 +125,36 @@ custom:
     # Specify your plugin configuration here: properties, captcha, dynamoDb, lambda, ses, slack
 ```
 
+> **Important**: To use environment variables from a `.env` file, you need to enable `useDotenv: true` in your `serverless.yaml`:
+>
+> ```yaml
+> useDotenv: true
+> ```
+>
+> This allows you to reference environment variables using `${env:VARIABLE_NAME}` syntax throughout your configuration.
+
 ### CORS configuration
 
+The plugin provides two levels of CORS configuration:
+
+#### 1. Lambda Response Headers
+
+Configure the `Access-Control-Allow-Origin` header in Lambda responses:
+
 ```yaml
-allowOrigin: https://github.com # optional, default value: "*"
+allowOrigin: ${env:ALLOWED_ORIGIN} # optional, default value: "*"
+```
+
+#### 2. API Gateway CORS Settings
+
+You also need to configure CORS at the API Gateway level in your `serverless.yaml`:
+
+```yaml
+provider:
+  httpApi:
+    cors:
+      allowedOrigins:
+        - ${env:ALLOWED_ORIGIN}
 ```
 
 ### Properties used in the form
@@ -94,15 +169,15 @@ properties: # optional
     name: idocynv # optional, default value: "phoneNumber"
   message:
     name: xhqpdaf # optional, default value: "message"
-  recaptchaToken:
-    name: zkrmqpa # optional, default value: "recaptchaToken"
+  captchaToken:
+    name: zkrmqpa # optional, default value: "captchaToken"
 ```
 
 - `email` - visitor's email
 - `name` - visitor's name
 - `phoneNumber` - visitor's phone number
 - `message` - visitor's message
-- `recaptchaToken` - reCAPTCHA token field name
+- `captchaToken` - reCAPTCHA token field name
 
 Using custom property names allows developers to use honeypot technique. Read more about it [here](https://dev.to/felipperegazio/how-to-create-a-simple-honeypot-to-protect-your-web-forms-from-spammers--25n8).
 
@@ -112,25 +187,32 @@ This plugin uses **Google reCAPTCHA Enterprise** for bot protection.
 
 ```yaml
 captcha: # optional
-  projectId: my_landing_page # required if using reCAPTCHA
-  key: my_key # required if using reCAPTCHA
+  projectId: ${env:CAPTCHA_PROJECT_ID} # required if using reCAPTCHA
+  siteKey: ${env:CAPTCHA_SITE_KEY} # required if using reCAPTCHA
+  clientEmail: ${env:CAPTCHA_CLIENT_EMAIL} # required if using reCAPTCHA
+  privateKey: ${env:CAPTCHA_PRIVATE_KEY} # required if using reCAPTCHA
   action: form_submit # required if using reCAPTCHA
   threshold: 0.8 # optional, default value: 0.5
 ```
 
-> **IMPORTANT**: SENSITIVE VALUES (projectId, key) MUST BE LOADED USING ENVIRONMENT VARIABLES, NEVER PUT SENSITIVE DATA DIRECTLY IN YOUR CODE!!!
+> **IMPORTANT**: SENSITIVE VALUES (projectId, siteKey, clientEmail, privateKey) MUST BE LOADED USING ENVIRONMENT VARIABLES, NEVER PUT SENSITIVE DATA DIRECTLY IN YOUR CODE!!!
 
 - `projectId` - Your Google Cloud Project ID where reCAPTCHA Enterprise is configured
-- `key` - The reCAPTCHA site key associated with your site/app
+- `siteKey` - The reCAPTCHA site key associated with your site/app
 - `action` - Action name corresponding to the token (must match the action used in your frontend `grecaptcha.enterprise.execute()` call)
-- `threshold` - Score threshold (0.0 to 1.0) determining when a request performer is treated as a bot. Higher values are more restrictive. (check the [link](https://cloud.google.com/recaptcha-enterprise/docs/interpret-assessment))
+- `threshold` - Score threshold (0.0 to 1.0) determining when a request is treated as coming from a bot. Higher values are more restrictive (check the [link](https://cloud.google.com/recaptcha-enterprise/docs/interpret-assessment))
+- `clientEmail` - Service account email for Google Cloud authentication
+- `privateKey` - Service account private key for Google Cloud authentication
 
 To set up reCAPTCHA Enterprise:
 
 1. Create a Google Cloud Project
 2. Enable the reCAPTCHA Enterprise API
-3. Create a site key for your website
-4. Configure the key and projectId in your `serverless.yaml`
+3. Create a site key for your website and use it as `siteKey`
+4. Create a service account with `reCAPTCHA Enterprise Agent` role
+5. Download the service account key JSON file
+6. Extract the `client_email` (e.g., `recaptcha@your-project.iam.gserviceaccount.com`) and `private_key` values (including `-----BEGIN PRIVATE KEY-----` and `-----END PRIVATE KEY-----` markers) from the JSON file and use them as `clientEmail` and `privateKey` in `captcha` config
+7. Configure the other properties like `projectId`, `action`, and optionally `threshold` in your `serverless.yaml`
 
 Check the [Google reCAPTCHA Enterprise documentation](https://cloud.google.com/recaptcha-enterprise/docs) to learn more about setup and configuration.
 
@@ -172,7 +254,7 @@ ses: #required
     subject: Hello {{ name }}! # optional, default value: "Hello {{ name }}!"
     text: ./templates/visitor-confirmation.txt # optional
     html: ./templates/visitor-confirmation.html # optional
-  visitorConfirmationWitMessage:
+  visitorConfirmationWithMessage:
     subject: Hello {{ name }}! # optional, default value: "Hello {{ name }}!"
     text: ./templates/visitor-confirmation-with-message.txt # optional
     html: ./templates/visitor-confirmation-with-message.html # optional
@@ -312,7 +394,7 @@ If an error occurs, the lambda returns a short number that indicates the root ca
 |   10004    | DynamoDB error         |
 |   10005    | Slack error            |
 
-# Future development
+## Future development
 
 We believe that collaboration and community involvement are vital for creating a robust and effective solution. As the creators of the plugin, we are excited to open it up for development and invite your contributions to make it even better.
 
@@ -320,8 +402,8 @@ You can get involved by tackling various tasks and improvements through [GitHub 
 
 To contribute, simply head over to our GitHub repository, check out the existing issues, and feel free to open new ones if you have ideas or find areas that need attention.
 
-# Something about us
+## Something about us
 
-**Check [uninterrupted.tech](https://uninterrupted.tech) to meet our company and explore our range of professional services.**
+**Check [u11d.com](https://u11d.com) to meet our company and explore our range of professional services.**
 
-**Don't forget to explore our [blog](https://uninterrupted.tech/blog) as well! It's a treasure trove of valuable content covering various topics such as web development, DevOps, observability, and management.**
+**Don't forget to explore our [blog](https://u11d.com/blog) as well! It's a treasure trove of valuable content covering various topics such as web development, DevOps, observability, and management.**
